@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Jeux Shifumi</title>
+  </head>
+  <body>
+
+    <div id="jeu">
+        <button id="pierre">Pierre</button>
+        <button id="feuille">Feuille</button>
+        <button id="ciseaux">Ciseaux</button>
+    </div>
+    
+  <script>
+
+var boutonPierre = document.getElementById("pierre");
+var boutonFeuille = document.getElementById("feuille");
+var boutonCiseaux = document.getElementById("ciseaux");
+
+boutonPierre.addEventListener("click", function() {
+  jouerManche("pierre");
+});
+
+boutonFeuille.addEventListener("click", function() {
+  jouerManche("feuille");
+});
+
+boutonCiseaux.addEventListener("click", function() {
+  jouerManche("ciseaux");
+});
+
+var choixOrdinateur = choisirAleatoirement();
+
+function jouerManche(choixJoueur) {
+  var choixOrdinateur = choisirAleatoirement();
+  var resultat = jouerPartie(choixJoueur, choixOrdinateur);
+  if (resultat === "gagné") {
+    window.alert("Vous avez gagné ! Vous avez joué " + choixJoueur + " et l'ordinateur a joué " + choixOrdinateur + ".");
+  } else {
+    window.alert("Vous avez perdu ! Vous avez joué " + choixJoueur + " et l'ordinateur a joué " + choixOrdinateur + ".");
+  }
+  return resultat;
+}
+
+function jouerPartie(choixJoueur, choixOrdinateur) {
+  switch (choixJoueur) {
+    case "pierre":
+      if (choixOrdinateur === "ciseaux") {
+        return "gagné";
+      } else {
+        return "perdu";
+      }
+    case "feuille":
+      if (choixOrdinateur === "pierre") {
+        return "gagné";
+      } else {
+        return "perdu";
+      }
+    case "ciseaux":
+      if (choixOrdinateur === "feuille") {
+        return "gagné";
+      } else {
+        return "perdu";
+      }
+    default:
+      return "match nul";
+  }
+}
+
+var choixOrdinateur = choisirAleatoirement();
+
+function choisirAleatoirement() {
+  var choix = Math.random();
+  if (choix < 0.3) {
+    return "pierre";
+  } else if (choix <= 0.7) {
+    return "feuille";
+  } else {
+    return "ciseaux";
+  }
+}
+
+var manchesGagneesJoueur = 0;
+var manchesGagneesOrdinateur = 0;
+var manches = [];
+
+while (manches.length < 3) {
+  var choixJoueur = prompt("Veuillez choisir pierre, feuille ou ciseaux :");
+  var resultat = jouerManche(choixJoueur);
+  if (resultat === "gagné") {
+    manchesGagneesJoueur++;
+  } else {
+    manchesGagneesOrdinateur++;
+  }
+  manches.push(resultat);
+}
+
+console.log("Manches gagnées par le joueur : " + manchesGagneesJoueur);
+console.log("Manches gagnées par l'ordinateur : " + manchesGagneesOrdinateur);
+
+if (manchesGagneesJoueur > manchesGagneesOrdinateur) {
+  console.log("Le joueur a gagné la partie !");
+} else if (manchesGagneesJoueur < manchesGagneesOrdinateur) {
+  console.log("L'ordinateur a gagné la partie !");
+} else {
+  console.log("Match nul !");
+}
+
+console.log("Statistiques des manches :");
+for (var i = 0; i < manches.length; i++) {
+  console.log(manches[i]);
+}
+
+</script>
+
+</body>
+</html>
